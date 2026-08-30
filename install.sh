@@ -4,16 +4,18 @@ set -eu
 : "${HOME:?HOME is not set}"
 
 repo_dir=$(CDPATH= cd -P "$(dirname "$0")" && pwd)
-claude_link=$HOME/.claude/skills/figure-versioning
-codex_link=$HOME/.agents/skills/figure-versioning
+skills_dir=$repo_dir/skills
+claude_dir=$HOME/.claude/skills
+codex_dir=$HOME/.agents/skills
 
-mkdir -p "$HOME/.claude/skills" "$HOME/.agents/skills"
+mkdir -p "$claude_dir" "$codex_dir"
 
 check_target() {
     target=$1
+    source=$2
     if [ -L "$target" ]; then
         linked_dir=$(CDPATH= cd -P "$target" 2>/dev/null && pwd) || linked_dir=
-        if [ "$linked_dir" != "$repo_dir" ]; then
+        if [ "$linked_dir" != "$source" ]; then
             printf 'Refusing to overwrite unrelated symlink: %s\n' "$target" >&2
             return 1
         fi
@@ -23,12 +25,25 @@ check_target() {
     fi
 }
 
-check_target "$claude_link"
-check_target "$codex_link"
+skill_count=0
+for skill_dir in "$skills_dir"/*; do
+    [ -f "$skill_dir/SKILL.md" ] || continue
+    skill_name=${skill_dir##*/}
+    check_target "$claude_dir/$skill_name" "$skill_dir"
+    check_target "$codex_dir/$skill_name" "$skill_dir"
+    skill_count=$((skill_count + 1))
+done
 
-[ -L "$claude_link" ] || ln -s "$repo_dir" "$claude_link"
-[ -L "$codex_link" ] || ln -s "$repo_dir" "$codex_link"
+if [ "$skill_count" -eq 0 ]; then
+    printf 'No skills found in %s\n' "$skills_dir" >&2
+    exit 1
+fi
 
-printf 'Installed figure-versioning for Claude Code and Codex.\n'
-printf '  %s -> %s\n' "$claude_link" "$repo_dir"
-printf '  %s -> %s\n' "$codex_link" "$repo_dir"
+for skill_dir in "$skills_dir"/*; do
+    [ -f "$skill_dir/SKILL.md" ] || continue
+    skill_name=${skill_dir##*/}
+    [ -L "$claude_dir/$skill_name" ] || ln -s "$skill_dir" "$claude_dir/$skill_name"
+    [ -L "$codex_dir/$skill_name" ] || ln -s "$skill_dir" "$codex_dir/$skill_name"
+done
+
+printf 'Installed %s skill(s) for Claude Code and Codex.\n' "$skill_count"
