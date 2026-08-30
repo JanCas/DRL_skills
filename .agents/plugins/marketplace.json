@@ -1,0 +1,20 @@
+{
+  "name": "drl-lab",
+  "interface": {
+    "displayName": "DRL Lab"
+  },
+  "plugins": [
+    {
+      "name": "drl-skills",
+      "source": {
+        "source": "local",
+        "path": "./plugins/drl-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

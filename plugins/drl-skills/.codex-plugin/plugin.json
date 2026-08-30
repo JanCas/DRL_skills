@@ -1,0 +1,23 @@
+{
+  "name": "drl-skills",
+  "version": "0.1.0",
+  "description": "Shared research workflows for the DRL lab.",
+  "author": {
+    "name": "DRL Lab"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "DRL Skills",
+    "shortDescription": "Shared research workflows for the DRL lab.",
+    "longDescription": "Reusable lab workflows for managing research outputs and other repeatable tasks in ChatGPT and Codex.",
+    "developerName": "DRL Lab",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use $figure-versioning to organize generated figures."
+    ]
+  }
+}
