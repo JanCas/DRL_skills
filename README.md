@@ -92,13 +92,68 @@ Codex marketplace installs:
 codex plugin marketplace upgrade drl-lab
 ```
 
-Direct installs update with `git pull`. Run `sh install.sh` again only after a
-new skill is added.
+Direct installs made from a clone update with `git pull`. Run `sh install.sh`
+again only after a new skill is added. ZIP downloads cannot use `git pull`;
+download a fresh ZIP and rerun the installer instead.
 
-## Add a skill
+## Contribute a skill
 
-Add it at `plugins/drl-skills/skills/<skill-name>/SKILL.md` and bump the version
-in both plugin manifests before release:
+Installing the marketplace does not clone a working copy of this repository.
+Claude Code and Codex keep installed plugins in managed caches that may be
+replaced during updates, so do not edit those cached files.
+
+To contribute, fork the repository if needed, then clone the repository or your
+fork and create a branch:
+
+```sh
+git clone https://github.com/JanCas/DRL_skills.git
+cd DRL_skills
+git switch -c add-my-skill
+mkdir -p plugins/drl-skills/skills/my-skill
+```
+
+Add `plugins/drl-skills/skills/my-skill/SKILL.md` with at least:
+
+```markdown
+---
+name: my-skill
+description: Explain what the skill does and when to use it.
+---
+
+Skill instructions go here.
+```
+
+Optional assets and references belong inside the same skill folder:
+
+```text
+plugins/drl-skills/skills/my-skill/
+├── SKILL.md
+├── assets/
+└── references/
+```
+
+Validate the plugin, then commit, push, and open a pull request:
+
+```sh
+claude plugin validate plugins/drl-skills --strict
+git add plugins/drl-skills/skills/my-skill
+git commit -m "Add my-skill"
+git push -u origin add-my-skill
+gh pr create
+```
+
+Contributors without a local clone can instead fork the repository and create
+or upload the skill files through GitHub's web interface, then open a pull
+request. A local clone is recommended because it allows validation before the
+pull request.
+
+Contributors should not change plugin versions in individual skill pull
+requests. The maintainer bumps both manifests together when preparing a
+release:
 
 - `plugins/drl-skills/.claude-plugin/plugin.json`
 - `plugins/drl-skills/.codex-plugin/plugin.json`
+
+After the release, marketplace users receive the new skill through the update
+commands above; they still do not need to clone the repository. The new skill
+is invoked as `/drl-skills:my-skill` in Claude Code and `$my-skill` in Codex.
