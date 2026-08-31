@@ -1,6 +1,7 @@
 # DRL Skills
 
-A lab marketplace of reusable skills for ChatGPT, Codex, and Claude Code.
+A lab marketplace of reusable skills for Claude Code, ChatGPT, and Codex. Both
+marketplace formats load the same plugin and skill files.
 
 ## Included plugin
 
@@ -9,64 +10,96 @@ The `drl-skills` plugin currently bundles:
 - **figure-versioning** — files generated figures and their CSV, JSON, and NPZ
   outputs into traceable numbered versions with manifests and a shared index.
 
-## Get it
+Replace `OWNER` below with the GitHub user or organization that publishes this
+repository.
 
-Clone the repository after it is published:
+## Install in Claude Code
+
+Run these commands in a terminal:
 
 ```sh
-git clone https://github.com/OWNER/DRL_skills.git
-cd DRL_skills
+claude plugin marketplace add OWNER/DRL_skills
+claude plugin install drl-skills@drl-lab
 ```
 
-Alternatively, use GitHub's **Code → Download ZIP**, extract it, and open the
-extracted directory in a terminal.
+Restart Claude Code, or run `/reload-plugins` when prompted. Invoke the bundled
+skill with:
 
-## Install the plugin
+```text
+/drl-skills:figure-versioning
+```
 
-For local Codex use after this repository is published:
+The same installation can be performed from an active Claude Code session:
+
+```text
+/plugin marketplace add OWNER/DRL_skills
+/plugin install drl-skills@drl-lab
+/reload-plugins
+```
+
+## Install in Codex
+
+Run:
 
 ```sh
 codex plugin marketplace add OWNER/DRL_skills
 codex plugin add drl-skills@drl-lab
 ```
 
-Start a new task after installation so Codex loads the plugin.
+Start a new task so Codex loads the plugin. Invoke the skill with
+`$figure-versioning`.
 
-For workspace-wide lab distribution, an admin imports the repository URL under
-**Admin → Plugins → Add → Import marketplace**. Leave **Path** blank because
-`.agents/plugins/marketplace.json` is at the repository root.
+For workspace-wide ChatGPT distribution, an admin imports the repository URL
+under **Admin → Plugins → Add → Import marketplace**. Leave **Path** blank
+because `.agents/plugins/marketplace.json` is at the repository root.
 
-## Direct skill install
+## Clone or download the source
 
-Claude Code users can install only the Claude skill links:
+```sh
+git clone https://github.com/OWNER/DRL_skills.git
+cd DRL_skills
+```
+
+Alternatively, use GitHub's **Code → Download ZIP** and extract it.
+
+## Direct install without a marketplace
+
+From a clone or extracted download, run one of:
 
 ```sh
 sh install.sh claude
-```
-
-The installer also supports `codex` or `all` for direct, non-plugin installs:
-
-```sh
-sh install.sh
 sh install.sh codex
+sh install.sh
 ```
 
-It links every bundled skill into:
-
-- Claude Code: `~/.claude/skills/<skill-name>`
-- Codex: `~/.agents/skills/<skill-name>`
-
-Do not combine a direct Codex install with the plugin install, or the same skill
-may appear twice. Invoke `figure-versioning` with `/figure-versioning` in Claude
-Code or `$figure-versioning` in Codex.
-
-## Add a skill
-
-Add it at `plugins/drl-skills/skills/<skill-name>/SKILL.md` and update the
-version in `plugins/drl-skills/.codex-plugin/plugin.json` before release.
+The last command installs for both tools. It links every bundled skill into
+`~/.claude/skills` and/or `~/.agents/skills`. Do not combine a direct install
+with a marketplace install for the same tool, or the skill may appear twice.
+Direct Claude installs use `/figure-versioning`; direct Codex installs use
+`$figure-versioning`.
 
 ## Update
 
-Workspace imports sync from GitHub automatically. Local Codex users can run
-`codex plugin marketplace upgrade drl-lab`; direct installs update with
-`git pull`, followed by `sh install.sh` when a new skill is added.
+Claude Code marketplace installs:
+
+```sh
+claude plugin marketplace update drl-lab
+claude plugin update drl-skills@drl-lab
+```
+
+Codex marketplace installs:
+
+```sh
+codex plugin marketplace upgrade drl-lab
+```
+
+Direct installs update with `git pull`. Run `sh install.sh` again only after a
+new skill is added.
+
+## Add a skill
+
+Add it at `plugins/drl-skills/skills/<skill-name>/SKILL.md` and bump the version
+in both plugin manifests before release:
+
+- `plugins/drl-skills/.claude-plugin/plugin.json`
+- `plugins/drl-skills/.codex-plugin/plugin.json`

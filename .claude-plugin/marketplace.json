@@ -1,0 +1,14 @@
+{
+  "name": "drl-lab",
+  "owner": {
+    "name": "DRL Lab"
+  },
+  "description": "Reusable research workflows shared by the DRL lab.",
+  "plugins": [
+    {
+      "name": "drl-skills",
+      "source": "./plugins/drl-skills",
+      "description": "Shared research workflows for the DRL lab."
+    }
+  ]
+}
