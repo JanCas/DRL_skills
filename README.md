@@ -10,15 +10,14 @@ The `drl-skills` plugin currently bundles:
 - **figure-versioning** — files generated figures and their CSV, JSON, and NPZ
   outputs into traceable numbered versions with manifests and a shared index.
 
-Replace `OWNER` below with the GitHub user or organization that publishes this
-repository.
+This repository is published under the GitHub account `JanCas`.
 
 ## Install in Claude Code
 
 Run these commands in a terminal:
 
 ```sh
-claude plugin marketplace add OWNER/DRL_skills
+claude plugin marketplace add JanCas/DRL_skills
 claude plugin install drl-skills@drl-lab
 ```
 
@@ -32,7 +31,7 @@ skill with:
 The same installation can be performed from an active Claude Code session:
 
 ```text
-/plugin marketplace add OWNER/DRL_skills
+/plugin marketplace add JanCas/DRL_skills
 /plugin install drl-skills@drl-lab
 /reload-plugins
 ```
@@ -42,7 +41,7 @@ The same installation can be performed from an active Claude Code session:
 Run:
 
 ```sh
-codex plugin marketplace add OWNER/DRL_skills
+codex plugin marketplace add JanCas/DRL_skills
 codex plugin add drl-skills@drl-lab
 ```
 
@@ -56,7 +55,7 @@ because `.agents/plugins/marketplace.json` is at the repository root.
 ## Clone or download the source
 
 ```sh
-git clone https://github.com/OWNER/DRL_skills.git
+git clone https://github.com/JanCas/DRL_skills.git
 cd DRL_skills
 ```
 
