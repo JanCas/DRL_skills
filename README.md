@@ -17,7 +17,7 @@ This repository is published under the GitHub account `JanCas`.
 Run these commands in a terminal:
 
 ```sh
-claude plugin marketplace add JanCas/DRL_skills
+claude plugin marketplace add https://github.com/JanCas/DRL_skills.git
 claude plugin install drl-skills@drl-lab
 ```
 
@@ -31,7 +31,7 @@ skill with:
 The same installation can be performed from an active Claude Code session:
 
 ```text
-/plugin marketplace add JanCas/DRL_skills
+/plugin marketplace add https://github.com/JanCas/DRL_skills.git
 /plugin install drl-skills@drl-lab
 /reload-plugins
 ```
